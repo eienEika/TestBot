@@ -1,26 +1,9 @@
 import config
 import telebot
-import numpy
 import os
+import solve
 
 bot = telebot.TeleBot(config.token)
-
-
-def solve(file):
-	handle = open(file, 'r')
-	row = int(handle.readline())
-	col = int(handle.readline())
-	b = [float(x) for x in handle.readline().split()]
-
-	A = []
-	for i in range(0, row):
-		A.append([float(x) for x in handle.readline().split()])
-	handle.close()
-	print(A)
-	print(b)
-	x = numpy.linalg.lstsq(A, b, rcond=None)
-	print(x)
-	return x
 
 
 @bot.message_handler(content_types=["text"])
@@ -39,7 +22,7 @@ def get_file(message):
 	file.close()
 	bot.reply_to(message, "Файл добавлено")
 
-	out = solve(src)[0]
+	out = solve.solve(src)[0]
 	if len(out) > 10:
 		out_file = open('D:\\qot\\out.txt', 'w+')
 		for i in out:
@@ -57,4 +40,5 @@ def get_file(message):
 
 if __name__ == '__main__':
 	bot.polling(none_stop=True)
+
 
