@@ -35,13 +35,15 @@ def get_file(message):
 	file.close()
 	bot.reply_to(message, "Файл добавлено")
 
-	out = solve.solve(src)[0]
+	out = solve.solve(src)
 	os.remove(src)
 
-	if len(out) > 10:   # if system is big then bot will send you answer in out file
+	if out is None:
+		bot.send_message(message.chat.id, "No solution")
+	elif len(out) > 10:   # if system is big then bot will send you answer in out file
 		out_file = open(file_dir + os.sep + 'out.txt', 'w+')
 		for i in out:
-			out_file.write(str(i) + '\n')
+			out_file.write(str(i) + '=' + str(out[i]) + '\n')
 		out_file = open(file_dir + os.sep + 'out.txt', 'r')
 		bot.send_document(message.chat.id, out_file)
 		out_file.close()
@@ -50,7 +52,7 @@ def get_file(message):
 	else:
 		out_message = ''
 		for i in out:
-			out_message += str(i) + '\n'
+			out_message += str(i) + '=' + str(out[i]) + '\n'
 		bot.send_message(message.chat.id, out_message)
 
 
