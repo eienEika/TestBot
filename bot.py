@@ -7,10 +7,13 @@ import time
 bot = telebot.TeleBot(config.token)
 
 # path to downloaded files
-path = os.environ['HOMEPATH']
-if not os.path.exists(path + os.sep + 'tmpBOT'):
-	os.mkdir(path + os.sep + 'tmpBOT')
-path += os.sep + 'tmpBOT' + os.sep
+if os.name is 'nt':  # if windows
+	path = os.environ['HOMEPATH']
+else:
+	path = os.environ['HOME']
+if not os.path.exists(path + os.sep + '.tmpBOT'):
+	os.mkdir(path + os.sep + '.tmpBOT')
+path += os.sep + '.tmpBOT' + os.sep
 
 
 # @bot.message_handler(content_types=["text"])
