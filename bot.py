@@ -16,11 +16,21 @@ if not os.path.exists(path + os.sep + '.tmpBOT'):
 path += os.sep + '.tmpBOT' + os.sep
 
 
-# @bot.message_handler(content_types=["text"])
-# def repeat(message):
-#	bot.send_message(message.chat.id, message.text)
+# start message
+@bot.message_handler(commands=["start"])
+def start(message):
+	_message = open('commands/start')
+	bot.send_message(message.chat.id, _message.read())
 
 
+# help message
+@bot.message_handler(commands=["help"])
+def start(message):
+	_message = open('commands/help')
+	bot.send_message(message.chat.id, _message.read())
+
+
+# getting file with system
 @bot.message_handler(content_types=['document'])
 def get_file(message):
 	file_info = bot.get_file(message.document.file_id)
