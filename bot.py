@@ -30,6 +30,13 @@ def start(message):
 	bot.send_message(message.chat.id, _message.read())
 
 
+# format message
+@bot.message_handler(commands=["format"])
+def start(message):
+	_message = open('commands/format')
+	bot.send_message(message.chat.id, _message.read())
+
+
 # getting file with system
 @bot.message_handler(content_types=['document'])
 def get_file(message):
