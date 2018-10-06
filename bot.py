@@ -7,13 +7,12 @@ import time
 bot = telebot.TeleBot(config.token)
 
 # path to downloaded files
-if os.name is 'nt':  # if windows
-	path = os.environ['HOMEPATH']
+if os.name is 'nt':
+	path = os.environ['TEMP']
 else:
-	path = os.environ['HOME']
-if not os.path.exists(path + os.sep + '.tmpBOT'):
-	os.mkdir(path + os.sep + '.tmpBOT')
-path += os.sep + '.tmpBOT' + os.sep
+	path = '/tmp'
+os.mkdir(path + os.sep + 'tmpBOT')
+path += os.sep + 'tmpBOT' + os.sep
 
 
 # start message
@@ -25,14 +24,14 @@ def start(message):
 
 # help message
 @bot.message_handler(commands=["help"])
-def start(message):
+def help(message):
 	_message = open('commands/help')
 	bot.send_message(message.chat.id, _message.read())
 
 
 # format message
 @bot.message_handler(commands=["format"])
-def start(message):
+def format(message):
 	_message = open('commands/format')
 	bot.send_message(message.chat.id, _message.read())
 
